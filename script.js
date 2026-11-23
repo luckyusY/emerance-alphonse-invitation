@@ -22,9 +22,52 @@
   if (saved === "rw" || saved === "en") setLang(saved);
   function currentLang() { return document.documentElement.lang === "rw" ? "rw" : "en"; }
 
+  // ---------- heart art ----------
+  var HEART = '<svg viewBox="0 0 24 24"><path d="M12 21s-7-4.4-9.3-9C1.2 8.7 3.3 5 6.8 5c2 0 3.5 1.1 5.2 3 1.7-1.9 3.2-3 5.2-3 3.5 0 5.6 3.7 4.1 7-2.3 4.6-9.3 9-9.3 9z"/></svg>';
+  var COLORS = ["#b3121f", "#d6344a", "#e9cf98", "#b98a3e", "#f08a9b"];
+  var reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var layer = document.getElementById("hearts");
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+  function floatHeart() {
+    if (document.hidden || layer.childElementCount > 14) return;
+    var h = document.createElement("span");
+    h.className = "fheart";
+    h.innerHTML = HEART;
+    var s = rnd(10, 24), d = rnd(11, 19);
+    h.style.cssText = "left:" + rnd(2, 96) + "vw;--s:" + s + "px;--d:" + d + "s;--w:" + rnd(2.5, 4.5) + "s;--r:" +
+      rnd(-25, 25) + "deg;--o:" + rnd(.25, .55) + ";--c:" + COLORS[Math.floor(Math.random() * COLORS.length)];
+    layer.appendChild(h);
+    setTimeout(function () { h.remove(); }, d * 1000 + 200);
+  }
+  function burstHearts(x, y, n) {
+    for (var i = 0; i < n; i++) {
+      var b = document.createElement("span");
+      b.className = "burst-heart";
+      b.innerHTML = HEART;
+      var a = (Math.PI * 2 * i) / n + rnd(-.2, .2), dist = rnd(90, 220);
+      b.style.cssText = "left:" + x + "px;top:" + y + "px;--x:" + Math.cos(a) * dist + "px;--y:" + Math.sin(a) * dist +
+        "px;--sc:" + rnd(.8, 1.6) + ";--r:" + rnd(-40, 40) + "deg;--c:" + COLORS[Math.floor(Math.random() * COLORS.length)];
+      document.body.appendChild(b);
+      setTimeout(b.remove.bind(b), 1500);
+    }
+  }
+  if (!reduceMotion) {
+    for (var k = 0; k < 4; k++) setTimeout(floatHeart, k * 900);
+    setInterval(floatHeart, 1600);
+  }
+  // little heart pop wherever guests tap on the hero
+  document.querySelector(".hero").addEventListener("click", function (e) {
+    if (!reduceMotion && !e.target.closest("a")) burstHearts(e.clientX, e.clientY, 7);
+  });
+
   // ---------- intro ----------
   var intro = document.getElementById("intro");
   function openInvite() {
+    var seal = document.getElementById("openBtn");
+    if (seal && !reduceMotion) {
+      var r = seal.getBoundingClientRect();
+      burstHearts(r.left + r.width / 2, r.top + r.height / 2, 18);
+    }
     intro.classList.add("opened");
     document.body.classList.remove("locked");
     setTimeout(function () { intro.remove(); }, 1300);

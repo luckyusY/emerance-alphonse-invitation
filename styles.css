@@ -28,7 +28,29 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .section-head{text-align:center;max-width:720px;margin:0 auto 3rem;padding:0 16px}
 .section-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.1;margin-top:.5rem;color:var(--wine)}
 .section-head .sub{color:var(--ink-soft);margin-top:.6rem}
-.section-head h2::after{content:"";display:block;width:64px;height:1px;background:var(--gold);margin:1.1rem auto 0}
+.section-head h2::after{content:"";display:block;width:150px;height:18px;margin:1rem auto 0;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 18'%3E%3Cpath d='M0 9h58M92 9h58' stroke='%23b98a3e' stroke-width='1'/%3E%3Cpath d='M75 17s-8-4.8-10.2-9.2C63.3 4.5 65.4 1 68.6 1c2.4 0 4.2 1.4 6.4 3.8C77.2 2.4 79 1 81.4 1c3.2 0 5.3 3.5 3.8 6.8C83 12.2 75 17 75 17z' fill='%23b3121f'/%3E%3C/svg%3E") center/contain no-repeat}
+
+/* ---------- heart art ---------- */
+.hearts-layer{position:fixed;inset:0;pointer-events:none;z-index:40;overflow:hidden}
+.fheart{position:absolute;bottom:-40px;width:var(--s,16px);height:var(--s,16px);opacity:0;
+  animation:floatUp var(--d,14s) linear forwards}
+.fheart svg{width:100%;height:100%;fill:var(--c,#b3121f);animation:sway var(--w,3.5s) ease-in-out infinite alternate}
+@keyframes floatUp{0%{transform:translateY(0) rotate(var(--r,0deg));opacity:0}10%{opacity:var(--o,.45)}85%{opacity:var(--o,.45)}100%{transform:translateY(-112vh) rotate(var(--r,0deg));opacity:0}}
+@keyframes sway{from{transform:translateX(-14px)}to{transform:translateX(14px)}}
+.burst-heart{position:fixed;z-index:120;width:22px;height:22px;pointer-events:none;margin:-11px 0 0 -11px;
+  animation:burst 1.4s cubic-bezier(.2,.7,.3,1) forwards}
+.burst-heart svg{width:100%;height:100%;fill:var(--c,#e9cf98)}
+@keyframes burst{0%{transform:translate(0,0) scale(.3);opacity:1}100%{transform:translate(var(--x),var(--y)) scale(var(--sc,1.2)) rotate(var(--r,0deg));opacity:0}}
+.flourish .fh{fill:var(--red);stroke:none;animation:beat 1.6s ease-in-out infinite;transform-origin:100px 12px}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.18)}30%{transform:scale(1)}45%{transform:scale(1.12)}}
+.heart-pair{margin:0 auto 1.2rem;width:74px}
+.heart-pair svg{width:100%;overflow:visible}
+.heart-pair .hp1{fill:none;stroke:var(--gold);stroke-width:1.6}
+.heart-pair .hp2{fill:var(--red);opacity:.9;animation:beat 1.8s ease-in-out infinite;transform-origin:40px 24px}
+.names .amp{position:relative}
+.names .amp::after{content:"";position:absolute;left:50%;top:-.15em;width:.32em;height:.32em;transform:translateX(-50%);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23e9cf98' d='M12 21s-7-4.4-9.3-9C1.2 8.7 3.3 5 6.8 5c2 0 3.5 1.1 5.2 3 1.7-1.9 3.2-3 5.2-3 3.5 0 5.6 3.7 4.1 7-2.3 4.6-9.3 9-9.3 9z'/%3E%3C/svg%3E") center/contain no-repeat;animation:beat 1.6s ease-in-out infinite}
 .script{font-family:var(--script);font-weight:400}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.85rem 1.5rem;border-radius:999px;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;font-weight:400;text-decoration:none;transition:transform .25s,background .25s,color .25s,border-color .25s}
 .btn:hover{transform:translateY(-2px)}
