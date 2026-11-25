@@ -245,6 +245,32 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .lb-nav.prev{left:10px}.lb-nav.next{right:10px}
 .lightbox.single .lb-nav{display:none}
 
+/* ---------- music toggle ---------- */
+.music-toggle{position:fixed;bottom:24px;right:24px;z-index:110;display:flex;align-items:center;gap:6px;padding:9px 12px;border-radius:999px;background:rgba(125,15,23,.92);color:var(--gold-soft);border:1.5px solid var(--gold);box-shadow:0 8px 24px rgba(60,20,15,.45),inset 0 1px 2px rgba(255,255,255,.2);backdrop-filter:blur(6px);transition:transform .25s ease,background .25s ease,box-shadow .25s ease;user-select:none;-webkit-tap-highlight-color:transparent}
+.music-toggle:hover{transform:scale(1.06);background:var(--red);box-shadow:0 12px 28px rgba(60,20,15,.6)}
+.music-icon{position:relative;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center}
+.music-icon svg{width:100%;height:100%;transition:transform .3s ease,opacity .3s ease}
+.music-icon .icon-mute{display:none}
+.music-bars{display:flex;align-items:flex-end;gap:2px;height:14px;width:12px}
+.music-bars span{display:inline-block;width:2px;background:var(--gold-soft);border-radius:1px;height:3px}
+.music-toggle.playing .music-icon svg.icon-play{animation:musicPulse 2.4s ease-in-out infinite}
+.music-toggle.playing .music-bars span:nth-child(1){animation:barBounce .7s ease-in-out infinite alternate;height:12px}
+.music-toggle.playing .music-bars span:nth-child(2){animation:barBounce .9s ease-in-out infinite alternate .2s;height:14px}
+.music-toggle.playing .music-bars span:nth-child(3){animation:barBounce .8s ease-in-out infinite alternate .4s;height:10px}
+
+.music-toggle.paused{background:rgba(60,20,25,.85);border-color:rgba(233,207,152,.5);opacity:.85}
+.music-toggle.paused .icon-play{display:none}
+.music-toggle.paused .icon-mute{display:block}
+.music-toggle.paused .music-bars span{animation:none;height:3px;opacity:.5}
+
+@keyframes barBounce{from{height:3px}to{height:14px}}
+@keyframes musicPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15) rotate(6deg)}}
+
+@media (max-width:480px){
+  .music-toggle{bottom:18px;right:16px;padding:8px 10px}
+  .music-icon{width:18px;height:18px}
+}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important}
   .reveal{opacity:1;transform:none}

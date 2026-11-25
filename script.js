@@ -204,4 +204,48 @@
         (msg ? "\n\n" + msg : "");
     window.open("https://wa.me/" + to + "?text=" + encodeURIComponent(text), "_blank", "noopener");
   });
+
+  // ---------- background music (starts when the seal is tapped) ----------
+  var audio = document.getElementById("bgMusic");
+  var musicBtn = document.getElementById("musicToggle");
+  var userPaused = false;
+
+  function updateMusicUI(isPlaying) {
+    if (!musicBtn) return;
+    musicBtn.classList.toggle("playing", isPlaying);
+    musicBtn.classList.toggle("paused", !isPlaying);
+    musicBtn.setAttribute("aria-label", isPlaying ? "Pause background music" : "Play background music");
+  }
+
+  function playAudio() {
+    if (!audio || userPaused || !audio.paused) return;
+    var p = audio.play();
+    if (p && p.catch) p.catch(function () { updateMusicUI(false); });
+  }
+
+  if (audio && musicBtn) {
+    audio.volume = 0.7;
+    updateMusicUI(false);
+    audio.addEventListener("play", function () { updateMusicUI(true); });
+    audio.addEventListener("pause", function () { updateMusicUI(false); });
+
+    // Browsers only allow sound after a tap: the seal tap starts the song,
+    // and any first tap works too (e.g. guests arriving on a #section link).
+    document.getElementById("openBtn").addEventListener("click", playAudio);
+    function firstGesture() {
+      playAudio();
+      ["pointerdown", "keydown", "touchstart"].forEach(function (ev) {
+        window.removeEventListener(ev, firstGesture, true);
+      });
+    }
+    ["pointerdown", "keydown", "touchstart"].forEach(function (ev) {
+      window.addEventListener(ev, firstGesture, true);
+    });
+
+    musicBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (audio.paused) { userPaused = false; playAudio(); }
+      else { userPaused = true; audio.pause(); }
+    });
+  }
 })();
