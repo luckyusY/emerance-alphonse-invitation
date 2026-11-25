@@ -83,7 +83,7 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .seal-mono i{font-family:var(--script);font-style:normal;font-weight:400;margin:0 .1em}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 .intro-hint{margin-top:1.6rem;font-family:var(--serif);font-style:italic;font-size:1.15rem;opacity:.85}
-.intro-lang{margin-top:2.2rem;display:inline-flex}
+.intro .intro-lang{margin-top:2.2rem;display:inline-flex}
 
 /* ---------- lang switch ---------- */
 .lang-switch{display:flex;gap:4px;padding:3px;border-radius:999px;border:1px solid rgba(233,207,152,.4)}
